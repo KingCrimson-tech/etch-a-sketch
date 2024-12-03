@@ -1,5 +1,6 @@
 const container = document.querySelector('.container')
 const btn = document.querySelector('button');
+const rainBtn = document.querySelector('.rainbow');
 
 function setColor() {
     const colors = ['rgb(148, 0, 211)', 'rgb(75, 0, 130)', 'rgb(0, 0, 255)', 'rgb(0, 255, 0)', 'rgb(255, 255, 0)', 'rgb(255, 127, 0)', 'rgb(255, 0 , 0)'];
@@ -7,6 +8,13 @@ function setColor() {
 
     return rgbColor;   
 }
+
+let defaultColor = 'black';
+
+let rainbowEnable = false;
+rainBtn.addEventListener('click', () => {
+    rainbowEnable = true;
+})
 
 function createGrid(size) {
     container.replaceChildren();
@@ -17,7 +25,11 @@ function createGrid(size) {
         div.style.width = 600 / size + "px";
         div.style.height = 600 /size + "px";
         div.addEventListener('mouseover', () => {
-            div.style.backgroundColor = 'black';
+            if(rainbowEnable){
+                div.style.backgroundColor = setColor();
+            } else {
+                div.style.backgroundColor = defaultColor;
+            }
         });
         container.appendChild(div);
     }
