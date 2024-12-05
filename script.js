@@ -1,6 +1,8 @@
 const container = document.querySelector('.container')
 const btn = document.querySelector('button');
 const rainBtn = document.querySelector('.rainbow');
+const defaultBtn = document.querySelector('.black-button');
+const eraser = document.querySelector('.eraser');
 
 function setColor() {
     const colors = ['rgb(148, 0, 211)', 'rgb(75, 0, 130)', 'rgb(0, 0, 255)', 'rgb(0, 255, 0)', 'rgb(255, 255, 0)', 'rgb(255, 127, 0)', 'rgb(255, 0 , 0)'];
@@ -10,11 +12,27 @@ function setColor() {
 }
 
 let defaultColor = 'black';
-
 let rainbowEnable = false;
+let defaultEnable = false;
+let eraserEnable = false;
+
 rainBtn.addEventListener('click', () => {
     rainbowEnable = true;
-})
+    defaultEnable = false;
+    eraserEnable = false;
+});
+
+defaultBtn.addEventListener('click', () => {
+    defaultEnable = true;
+    rainbowEnable = false;
+    eraserEnable = false;
+});
+
+eraser.addEventListener('click', () => {
+    eraserEnable = true;
+    rainbowEnable = false;
+    defaultEnable = false;
+});
 
 function createGrid(size) {
     container.replaceChildren();
@@ -27,8 +45,10 @@ function createGrid(size) {
         div.addEventListener('mouseover', () => {
             if(rainbowEnable){
                 div.style.backgroundColor = setColor();
-            } else {
+            } else if (defaultEnable) {
                 div.style.backgroundColor = defaultColor;
+            } else if (eraserEnable){
+                div.style.backgroundColor = 'white';
             }
         });
         container.appendChild(div);
